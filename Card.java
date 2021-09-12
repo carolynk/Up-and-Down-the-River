@@ -73,10 +73,6 @@ public String displayNumber(int num) {
     }
     return numString;
   }  
-  
-  public boolean compareSuits(Card card1, Card card2) {
-    return card1.suit == card2.suit;
-  }
 
   public String format() {
     return this.displayNumber(this.number) + " of " + this.displaySuit(this.suit);
