@@ -9,7 +9,8 @@ class Game {
   private static Deck myDeck = new Deck();
   private static int round = 5;
   private static Card trump = new Card();
-  private static ArrayList<Card> table = new ArrayList<>();
+  // private static ArrayList<Card> table = new ArrayList<>();
+  private static Hashtable<Player, Card> table = new Hashtable<Player, Card>();
   Scanner keyboard = new Scanner(System.in);
   private static Player leader = player1;
 
@@ -30,10 +31,7 @@ class Game {
   * This method sets trump and plays a single round
   */
   public void playRound() {
-    Random random = new Random();
-    Game game = new Game();
-
-    game.trump = myDeck.deal();
+    this.trump = myDeck.deal();
     
     for (int i = round; i >= 1; i--) {
       System.out.println("This is the Trump: ");
@@ -51,7 +49,13 @@ class Game {
     playerTurn(player1);
     playerTurn(player2);
 
-    Player winner = getWinner();    
+    // Player winner = getWinner();   
+
+    System.out.println(" ");
+    System.out.println("The table:"); 
+    displayTable();
+    System.out.println(" ");
+
   }
   
   /**
@@ -66,8 +70,7 @@ class Game {
     int cardNumber = Integer.valueOf(keyboard.nextLine()) - 1;
 
     Card cardToPlay  = player.playCard(cardNumber);
-    System.out.println("You played: ");
-    System.out.println(" ");
+    System.out.print("You played: ");
     cardToPlay.display();
     System.out.println(" ");
     table.add(cardToPlay);
@@ -75,40 +78,35 @@ class Game {
   }
 
   /**
-  * Print who took the trick
-  * Give trick to winning player
+  * Figure out who won
   */
-  public void winTrick() {
-    
-  }
-
-  /**
-  * Figure out who one
-  */
-  public void getWinner() {
+  public Card getWinner() {
+    Card leadingCard = table.get(0);
+    Card winningCard = table.get(0);
     Card led = table.get(0);
       for (int i = 0; i < table.size(); i++) {
 
-          }
       }
     
+    return winningCard; 
+  }
+
+  public void compareCards(Card card1, Card card2) {
+
   }
 
   // Displays all the cards currently on the table
   public static void displayTable() {
-      Card leadingCard = table.get(0);
-      Card winningCard = table.get(0);
-      for (int i = 1; i < table.size(); i++) {
-          Card currentCard = table.get(i);
-          if (compareSuits(currentCard, leadingCard)) {
-            
-
+      for (int i = 0; i < table.size(); i++) {
+          if (table.get(i) != null) {
+              System.out.print(table.get(i).format() + " ");
           }
       }
 
       System.out.println();
       System.out.println();
   }
+
   /**
   * This method deals every player's hand
   * @param numDealt how many cards to deal
